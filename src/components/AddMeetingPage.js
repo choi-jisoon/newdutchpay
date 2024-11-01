@@ -125,7 +125,7 @@ function AddMeetingPage({ onSaveMeeting, initialData, onCancel }) {
          alert("모임명, 금액, 참여자가 필요합니다.");
       }
    };
-
+/*  */
    return (
       <Container>
          <Title>{initialData ? '모임 수정' : '새 모임 추가'}</Title>
