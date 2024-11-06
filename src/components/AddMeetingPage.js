@@ -15,6 +15,7 @@ const Container = styled.div`
    align-items: center;
    width: 100%;
    max-width: 400px;
+   
    padding: 20px;
    background-color: #FFF;
    border-radius: 10px;
