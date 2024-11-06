@@ -1,5 +1,5 @@
 // ParticipantManagement.js
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 
 function ParticipantManagement({ members, onMoveMember }) {
    const [selectedMember, setSelectedMember] = useState('');
@@ -24,3 +24,4 @@ function ParticipantManagement({ members, onMoveMember }) {
 }
 
 export default ParticipantManagement;
+ */
