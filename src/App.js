@@ -13,6 +13,7 @@ const navigateToMain = () => setPage('main');
 const navigateToAddMeeting = () => {
     setSelectedMeeting(null);
     setPage('addMeeting');
+    /*  */
 };
 const navigateToAddGroup = () => setPage('addGroup');
 
