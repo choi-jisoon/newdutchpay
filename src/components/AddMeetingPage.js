@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+// AddMeetingPage.js
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const PageWrapper = styled.div`
    display: flex;
    justify-content: center;
    align-items: center;
-   min-height: 100vh; /* 뷰포트 전체 높이 기준 중앙 정렬 */
-
+   min-height: 100vh;
 `;
 
 const Container = styled.div`
@@ -28,7 +28,7 @@ const Title = styled.h2`
 `;
 
 const Input = styled.input`
-   width: 100%;
+   width: 94.5%;
    padding: 10px;
    margin: 15px 0;
    border: 1px solid #000;
@@ -104,11 +104,33 @@ const CancelButton = styled.button`
    margin-top: 20px;
 `;
 
-function AddMeetingPage({ onSaveMeeting, initialData, onCancel }) {
-   const [title, setTitle] = useState(initialData ? initialData.title : '');
-   const [amount, setAmount] = useState(initialData ? initialData.amount : '');
-   const [members, setMembers] = useState(initialData ? initialData.members : []);
+const Select = styled.select`
+   width: 100%;
+   padding: 10px;
+   margin: 15px 0;
+   border: 1px solid #000;
+   border-radius: 5px;
+   font-size: 1rem;
+`;
+
+function AddMeetingPage({ onSaveMeeting, initialData = {}, onCancel, groups = [] }) {
+   // initialData가 null일 경우 빈 객체로 초기화
+   const safeInitialData = initialData || {};
+
+   const [title, setTitle] = useState(safeInitialData.title || '');
+   const [amount, setAmount] = useState(safeInitialData.amount || '');
+   const [members, setMembers] = useState(safeInitialData.members || []);
    const [newMember, setNewMember] = useState('');
+   const [selectedGroup, setSelectedGroup] = useState('');
+
+   // 그룹 선택 시 해당 그룹의 멤버들을 participants에 추가
+   useEffect(() => {
+      if (selectedGroup) {
+         const groupMembers = groups.find(group => group.groupName === selectedGroup)?.members || [];
+         const uniqueMembers = [...new Set([...members, ...groupMembers])]; // 중복 제거
+         setMembers(uniqueMembers);
+      }
+   }, [selectedGroup, groups]);
 
    const addMember = () => {
       if (newMember.trim() && !members.includes(newMember)) {
@@ -124,7 +146,7 @@ function AddMeetingPage({ onSaveMeeting, initialData, onCancel }) {
    const saveMeeting = () => {
       if (title && amount && members.length > 0) {
          onSaveMeeting({
-            id: initialData ? initialData.id : Date.now(),
+            id: safeInitialData.id || Date.now(),
             title,
             amount: parseInt(amount),
             members,
@@ -137,7 +159,8 @@ function AddMeetingPage({ onSaveMeeting, initialData, onCancel }) {
    return (
       <PageWrapper>
          <Container>
-            <Title>{initialData ? '모임 수정' : '새 모임 추가'}</Title>
+            <Title>{safeInitialData ? '새 모임 추가' : '모임 수정'}</Title>
+
             <Input
                value={title}
                onChange={(e) => setTitle(e.target.value)}
@@ -149,12 +172,29 @@ function AddMeetingPage({ onSaveMeeting, initialData, onCancel }) {
                placeholder="총 금액"
                type="number"
             />
+
+            {/* 그룹 선택 드롭다운 */}
+            <Select
+               value={selectedGroup}
+               onChange={(e) => setSelectedGroup(e.target.value)}
+            >
+               <option value="">그룹 선택</option>
+               {groups.map(group => (
+                  <option key={group.groupName} value={group.groupName}>
+                     {group.groupName}
+                  </option>
+               ))}
+            </Select>
+
+            {/* 새로운 참여자 추가 */}
             <Input
                value={newMember}
                onChange={(e) => setNewMember(e.target.value)}
-               placeholder="참여자 이름"
+               placeholder="참여자 그룹, 혹은 새로운 그룹원"
             />
             <AddMemberButton onClick={addMember}>참여자 추가</AddMemberButton>
+
+            {/* 참여자 목록 */}
             <MemberList>
                {members.map((member, index) => (
                   <MemberItem key={index}>
@@ -163,6 +203,7 @@ function AddMeetingPage({ onSaveMeeting, initialData, onCancel }) {
                   </MemberItem>
                ))}
             </MemberList>
+
             <ButtonG>
                <SaveButton onClick={saveMeeting}>저장</SaveButton>
                <CancelButton onClick={onCancel}>취소</CancelButton>

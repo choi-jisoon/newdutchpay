@@ -9,8 +9,8 @@ const getRandomColor = () => {
 
 const Card = styled.div`
    background-color: ${getRandomColor};
-   width: 100%;
-   height: 100%;
+   width: 100%;   /* 부모 그리드 크기에 맞춤 */
+   height: 273px; /* AddMeetingCard와 같은 높이로 설정 */
    border-radius: 10px;
    display: flex;
    flex-direction: column;
@@ -19,14 +19,13 @@ const Card = styled.div`
    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 기본 그림자 */
    color: #000;
    text-align: center;
-   padding: 10px;
    font-size: 14px;
    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
    /* hover 시 효과 */
    &:hover {
-      transform: translateY(-8px); /* 살짝 떠오르는 효과 */
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* 좀 더 강한 그림자 */
+      transform: translateY(-8px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
    }
 `;
 
@@ -34,19 +33,19 @@ const Title = styled.h3`
    font-size: 28px;
    margin: 20px 0;
    margin-top: -5px;
-`
+`;
 
 const InfoText = styled.p`
    font-size: 16px;
    margin: 10px 0;
-`
+`;
 
 const ButtonGroup = styled.div`
    display: flex;
    gap: 10px;
    justify-content: center;
    margin-top: 20px;
-`
+`;
 
 const EditButton = styled.button`
    padding: 5px 10px;
@@ -55,7 +54,7 @@ const EditButton = styled.button`
    border: none;
    cursor: pointer;
    border-radius: 5px;
-`
+`;
 
 const DeleteButton = styled.button`
    padding: 5px 10px;
@@ -64,12 +63,10 @@ const DeleteButton = styled.button`
    border: none;
    cursor: pointer;
    border-radius: 5px;
-`
+`;
 
 function MeetingCard({ meeting, onEdit, onDelete }) {
    const perPersonShare = meeting.members.length ? Math.ceil(meeting.amount / meeting.members.length) : 0;
-
-   // 첫 번째 참여자 이름과 나머지 인원 수 계산
    const firstMember = meeting.members[0];
    const remainingCount = meeting.members.length - 1;
 
