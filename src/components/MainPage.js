@@ -11,7 +11,7 @@ const PageContainer = styled.div`
 
 const MainContainer = styled.div`
    min-width: 600px;
-   /* min-height: 600px; */
+   min-height: 600px;
    padding: 20px;
    background-color: #FFF;
    position: relative;
