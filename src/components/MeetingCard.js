@@ -10,18 +10,25 @@ const getRandomColor = () => {
 const Card = styled.div`
    background-color: ${getRandomColor};
    width: 100%;
-   height: 250px; /* 카드의 높이를 조정 */
+   height: 100%;
    border-radius: 10px;
-  /*  padding: 15px; */
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 기본 그림자 */
    color: #000;
    text-align: center;
+   padding: 10px;
    font-size: 14px;
-`
+   transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+   /* hover 시 효과 */
+   &:hover {
+      transform: translateY(-8px); /* 살짝 떠오르는 효과 */
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* 좀 더 강한 그림자 */
+   }
+`;
 
 const Title = styled.h3`
    font-size: 28px;

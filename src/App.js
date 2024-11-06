@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import MainPage from './components/MainPage';
 import AddMeetingPage from './components/AddMeetingPage';
 
+
 function App() {
     const [page, setPage] = useState('main');
     const [meetings, setMeetings] = useState([]);

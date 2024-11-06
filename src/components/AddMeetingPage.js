@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const PageWrapper = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh; /* 뷰포트 전체 높이 기준 중앙 정렬 */
+
+`;
+
 const Container = styled.div`
    display: flex;
    flex-direction: column;
-   margin: auto;
    align-items: center;
    width: 100%;
    max-width: 400px;
    padding: 20px;
-   background-color: #999;
+   background-color: #FFF;
    border-radius: 10px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
 `;
 
 const Title = styled.h2`
@@ -24,7 +31,7 @@ const Input = styled.input`
    width: 100%;
    padding: 10px;
    margin: 15px 0;
-   border: 1px solid #ddd;
+   border: 1px solid #000;
    border-radius: 5px;
    font-size: 1rem;
 `;
@@ -71,7 +78,8 @@ const RemoveButton = styled.button`
 `;
 
 const ButtonG = styled.div`
-   display: flex; gap: 20px;
+   display: flex;
+   gap: 20px;
 `;
 
 const SaveButton = styled.button`
@@ -125,40 +133,42 @@ function AddMeetingPage({ onSaveMeeting, initialData, onCancel }) {
          alert("모임명, 금액, 참여자가 필요합니다.");
       }
    };
-/*  */
+
    return (
-      <Container>
-         <Title>{initialData ? '모임 수정' : '새 모임 추가'}</Title>
-         <Input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="모임명"
-         />
-         <Input
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="총 금액"
-            type="number"
-         />
-         <Input
-            value={newMember}
-            onChange={(e) => setNewMember(e.target.value)}
-            placeholder="참여자 이름"
-         />
-         <AddMemberButton onClick={addMember}>참여자 추가</AddMemberButton>
-         <MemberList>
-            {members.map((member, index) => (
-               <MemberItem key={index}>
-                  {member}
-                  <RemoveButton onClick={() => removeMember(member)}>x</RemoveButton>
-               </MemberItem>
-            ))}
-         </MemberList>
-         <ButtonG>
-            <SaveButton onClick={saveMeeting}>저장</SaveButton>
-            <CancelButton onClick={onCancel}>취소</CancelButton>
-         </ButtonG>
-      </Container>
+      <PageWrapper>
+         <Container>
+            <Title>{initialData ? '모임 수정' : '새 모임 추가'}</Title>
+            <Input
+               value={title}
+               onChange={(e) => setTitle(e.target.value)}
+               placeholder="모임명"
+            />
+            <Input
+               value={amount}
+               onChange={(e) => setAmount(e.target.value)}
+               placeholder="총 금액"
+               type="number"
+            />
+            <Input
+               value={newMember}
+               onChange={(e) => setNewMember(e.target.value)}
+               placeholder="참여자 이름"
+            />
+            <AddMemberButton onClick={addMember}>참여자 추가</AddMemberButton>
+            <MemberList>
+               {members.map((member, index) => (
+                  <MemberItem key={index}>
+                     {member}
+                     <RemoveButton onClick={() => removeMember(member)}>x</RemoveButton>
+                  </MemberItem>
+               ))}
+            </MemberList>
+            <ButtonG>
+               <SaveButton onClick={saveMeeting}>저장</SaveButton>
+               <CancelButton onClick={onCancel}>취소</CancelButton>
+            </ButtonG>
+         </Container>
+      </PageWrapper>
    );
 }
 

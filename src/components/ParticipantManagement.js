@@ -1,4 +1,4 @@
-/* // ParticipantManagement.js
+// ParticipantManagement.js
 import React, { useState } from 'react';
 
 function ParticipantManagement({ members, onMoveMember }) {
@@ -24,4 +24,3 @@ function ParticipantManagement({ members, onMoveMember }) {
 }
 
 export default ParticipantManagement;
- */
