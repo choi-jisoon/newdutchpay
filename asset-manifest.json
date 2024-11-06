@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/choi-jisoon/newdutchpay/static/css/main.59504966.css",
+    "main.js": "/choi-jisoon/newdutchpay/static/js/main.53bdb2a8.js",
+    "index.html": "/choi-jisoon/newdutchpay/index.html",
+    "main.59504966.css.map": "/choi-jisoon/newdutchpay/static/css/main.59504966.css.map",
+    "main.53bdb2a8.js.map": "/choi-jisoon/newdutchpay/static/js/main.53bdb2a8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.59504966.css",
+    "static/js/main.53bdb2a8.js"
+  ]
+}
