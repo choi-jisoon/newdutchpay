@@ -72,19 +72,19 @@ const AddMeetingCard = styled.button`
    }
 `;
 
-function MainPage({ meetings, onAddMeetingClick, onAddGroupClick, onEditMeeting, onDeleteMeeting }) {
+function MainPage({ meetings, onAddMeetingClick, onAddGroupClick, onSettings, onDeleteMeeting }) {
    return (
       <PageContainer>
          <MainContainer>
-            <h1>총무의 계산기</h1>
+            <h1>더치페이 모임</h1>
             <AddGroupButton onClick={onAddGroupClick}>그룹 생성</AddGroupButton>
             <MeetingGrid>
                {meetings.map(meeting => (
                   <MeetingCard
                      key={meeting.id}
                      meeting={meeting}
-                     onEdit={() => onEditMeeting(meeting)}
-                     onDelete={() => onDeleteMeeting(meeting.id)}
+                     onSettings={onSettings} // 설정 버튼 클릭 시 동작 추가
+                     onDelete={onDeleteMeeting}
                   />
                ))}
                <AddMeetingCard onClick={onAddMeetingClick}>모임 추가</AddMeetingCard>

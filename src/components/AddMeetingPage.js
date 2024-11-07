@@ -15,7 +15,7 @@ const Container = styled.div`
    align-items: center;
    width: 100%;
    max-width: 400px;
-   
+
    padding: 20px;
    background-color: #FFF;
    border-radius: 10px;
@@ -160,8 +160,7 @@ function AddMeetingPage({ onSaveMeeting, initialData = {}, onCancel, groups = []
    return (
       <PageWrapper>
          <Container>
-            <Title>{safeInitialData ? '새 모임 추가' : '모임 수정'}</Title>
-
+            <Title>{safeInitialData ? '새 모임 추가' : '새 모임 추가'}</Title>
             <Input
                value={title}
                onChange={(e) => setTitle(e.target.value)}
