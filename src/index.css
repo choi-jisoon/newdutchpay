@@ -1,3 +1,31 @@
 body {
    background-color: #000 !important;
 }
+input{
+   margin-right: 20px;
+   height: 30px;
+   border: 1px solid #000;
+   border-radius: 5px;
+}
+.check {
+   margin-right: 5px;
+   height: 12px;
+}
+label{
+   margin-right: 5px;
+}
+.member_group_add {
+   margin-left: 20px;
+}
+.meeting_delete {
+   margin-left: -2px;
+}
+.setting_span {
+   font-weight: 700;
+   background-color: #333;
+   padding: 6px 10px;
+   border-radius: 20px;
+   font-size: 1rem;
+   color: #fff;
+   margin-right: 10px;
+}

@@ -15,7 +15,6 @@ const Container = styled.div`
    align-items: center;
    width: 100%;
    max-width: 400px;
-
    padding: 20px;
    background-color: #FFF;
    border-radius: 10px;
@@ -51,7 +50,7 @@ const AddMemberButton = styled.button`
 const MemberList = styled.ul`
    list-style: none;
    padding: 0;
-   margin: 50px 0;
+   margin: 30px 0;
    display: flex;
    flex-wrap: wrap;
    gap: 10px;
@@ -119,7 +118,7 @@ function AddMeetingPage({ onSaveMeeting, initialData = {}, onCancel, groups = []
    const safeInitialData = initialData || {};
 
    const [title, setTitle] = useState(safeInitialData.title || '');
-   const [amount, setAmount] = useState(safeInitialData.amount || '');
+   /* const [amount, setAmount] = useState(safeInitialData.amount || ''); */
    const [members, setMembers] = useState(safeInitialData.members || []);
    const [newMember, setNewMember] = useState('');
    const [selectedGroup, setSelectedGroup] = useState('');
@@ -145,15 +144,15 @@ function AddMeetingPage({ onSaveMeeting, initialData = {}, onCancel, groups = []
    };
 
    const saveMeeting = () => {
-      if (title && amount && members.length > 0) {
+      if (title && members.length > 0) {
          onSaveMeeting({
             id: safeInitialData.id || Date.now(),
             title,
-            amount: parseInt(amount),
+            /* amount: parseInt(amount), */
             members,
          });
       } else {
-         alert("모임명, 금액, 참여자가 필요합니다.");
+         alert("모임명, 참여자가 필요합니다.");
       }
    };
 
@@ -166,12 +165,12 @@ function AddMeetingPage({ onSaveMeeting, initialData = {}, onCancel, groups = []
                onChange={(e) => setTitle(e.target.value)}
                placeholder="모임명"
             />
-            <Input
+            {/* <Input
                value={amount}
                onChange={(e) => setAmount(e.target.value)}
                placeholder="총 금액"
                type="number"
-            />
+            /> */}
 
             {/* 그룹 선택 드롭다운 */}
             <Select
