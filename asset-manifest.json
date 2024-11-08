@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/newdutchpay/static/css/main.59504966.css",
-    "main.js": "/newdutchpay/static/js/main.9f9dcd35.js",
+    "main.css": "/newdutchpay/static/css/main.78b74d6f.css",
+    "main.js": "/newdutchpay/static/js/main.aaecf933.js",
     "index.html": "/newdutchpay/index.html",
-    "main.59504966.css.map": "/newdutchpay/static/css/main.59504966.css.map",
-    "main.9f9dcd35.js.map": "/newdutchpay/static/js/main.9f9dcd35.js.map"
+    "main.78b74d6f.css.map": "/newdutchpay/static/css/main.78b74d6f.css.map",
+    "main.aaecf933.js.map": "/newdutchpay/static/js/main.aaecf933.js.map"
   },
   "entrypoints": [
-    "static/css/main.59504966.css",
-    "static/js/main.9f9dcd35.js"
+    "static/css/main.78b74d6f.css",
+    "static/js/main.aaecf933.js"
   ]
 }
