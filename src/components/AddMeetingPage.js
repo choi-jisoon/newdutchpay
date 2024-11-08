@@ -1,8 +1,11 @@
 // AddMeetingPage.js
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const PageWrapper = styled.div`
+   font-family: pretendard;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -28,6 +31,7 @@ const Title = styled.h2`
 `;
 
 const Input = styled.input`
+   font-family: pretendard;
    width: 94.5%;
    padding: 10px;
    margin: 15px 0;
@@ -37,6 +41,7 @@ const Input = styled.input`
 `;
 
 const AddMemberButton = styled.button`
+   font-family: pretendard;
    background-color: #4CAF50;
    color: white;
    padding: 10px;
@@ -50,7 +55,7 @@ const AddMemberButton = styled.button`
 const MemberList = styled.ul`
    list-style: none;
    padding: 0;
-   margin: 30px 0;
+   margin: 40px 0;
    display: flex;
    flex-wrap: wrap;
    gap: 10px;
@@ -60,7 +65,7 @@ const MemberList = styled.ul`
 const MemberItem = styled.li`
    font-weight: 700;
    background-color: #333;
-   padding: 6px 10px;
+   padding: 5px 3px 7px 9px;
    border-radius: 20px;
    font-size: 1rem;
    color: #fff;
@@ -74,15 +79,17 @@ const RemoveButton = styled.button`
    border: none;
    color: red;
    cursor: pointer;
-   font-size: 12px;
+   margin-top: 3px;
 `;
 
 const ButtonG = styled.div`
+
    display: flex;
    gap: 20px;
 `;
 
 const SaveButton = styled.button`
+   font-family: pretendard;
    background-color: #6200ea;
    color: white;
    padding: 12px 20px;
@@ -94,6 +101,7 @@ const SaveButton = styled.button`
 `;
 
 const CancelButton = styled.button`
+   font-family: pretendard;
    background-color: #e55555;
    color: white;
    padding: 12px 20px;
@@ -105,6 +113,7 @@ const CancelButton = styled.button`
 `;
 
 const Select = styled.select`
+   font-family: pretendard;
    width: 100%;
    padding: 10px;
    margin: 15px 0;
@@ -198,7 +207,7 @@ function AddMeetingPage({ onSaveMeeting, initialData = {}, onCancel, groups = []
                {members.map((member, index) => (
                   <MemberItem key={index}>
                      {member}
-                     <RemoveButton onClick={() => removeMember(member)}>x</RemoveButton>
+                     <RemoveButton onClick={() => removeMember(member)}><FontAwesomeIcon icon={faXmark} size='xl'/></RemoveButton>
                   </MemberItem>
                ))}
             </MemberList>

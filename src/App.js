@@ -1,9 +1,10 @@
 // App.js
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import MainPage from './components/MainPage';
 import AddMeetingPage from './components/AddMeetingPage';
 import AddGroupPage from './components/AddGroupPage';
 import SettingsPage from './components/SettingsPage';
+
 
 function App() {
     const [page, setPage] = useState('main');
@@ -11,52 +12,65 @@ function App() {
     const [groups, setGroups] = useState([]);
     const [selectedMeeting, setSelectedMeeting] = useState(null);
 
-    const navigateToMain = () => setPage('main');
-    const navigateToAddMeeting = () => {
+    // useCallback으로 navigate 함수를 메모이제이션 처리
+    const navigateToMain = useCallback(() => setPage('main'), []);
+    const navigateToAddMeeting = useCallback(() => {
         setSelectedMeeting(null);
         setPage('addMeeting');
-    };
-    const navigateToAddGroup = () => setPage('addGroup');
+    }, []);
+    const navigateToAddGroup = useCallback(() => setPage('addGroup'), []);
 
-    // SettingsPage로 이동하는 함수 (meeting 정보 전달)
-    const navigateToSettings = (meeting) => {
+    const navigateToSettings = useCallback((meeting) => {
         setSelectedMeeting(meeting);
         setPage('settings');
-    };
+    }, []);
 
-    const addMeeting = (meeting) => {
-        setMeetings([...meetings, { ...meeting, id: Date.now() }]);
+    const addMeeting = useCallback((meeting) => {
+        setMeetings((prevMeetings) => [...prevMeetings, { ...meeting, id: Date.now() }]);
         navigateToMain();
-    };
+    }, [navigateToMain]);
 
-    const addGroup = (group) => {
-        setGroups([...groups, { ...group, id: Date.now() }]);
-    };
+    const addGroupFromMain = useCallback((group) => {
+        setGroups((prevGroups) => [...prevGroups, { ...group, id: Date.now() }]);
+        navigateToMain();  // 그룹 생성 후 MainPage로 돌아감
+    }, [navigateToMain]);
 
-    const updateMeeting = (updatedMeeting) => {
-        const updatedMeetings = meetings.map(m => m.id === updatedMeeting.id ? updatedMeeting : m);
-        setMeetings(updatedMeetings);
+    const addGroupFromSettings = useCallback((group) => {
+        setGroups((prevGroups) => [...prevGroups, { ...group, id: Date.now() }]);
+    }, []);
+
+    const updateMeeting = useCallback((updatedMeeting) => {
+        setMeetings((prevMeetings) =>
+            prevMeetings.map((m) => (m.id === updatedMeeting.id ? updatedMeeting : m))
+        );
         setSelectedMeeting(updatedMeeting);
-    };
+    }, []);
 
-    const deleteMeeting = (id) => {
-        setMeetings(meetings.filter(meeting => meeting.id !== id));
-    };
+    const deleteMeeting = useCallback((id) => {
+        setMeetings((prevMeetings) => prevMeetings.filter((meeting) => meeting.id !== id));
+    }, []);
 
-    // 개별 멤버 추가 함수
-    const addMembersToMeeting = (newMemberList) => {
+    const addMembersToMeeting = useCallback((newMemberList) => {
         const updatedMeeting = { ...selectedMeeting, members: newMemberList };
         updateMeeting(updatedMeeting);
-    };
+    }, [selectedMeeting, updateMeeting]);
 
-    // SettingsPage에 전달할 onSavePayment 함수
-    const onSavePayment = (payment) => {
+    const onSavePayment = useCallback((payment) => {
         if (selectedMeeting) {
             const updatedPayments = [...(selectedMeeting.payments || []), payment];
             const updatedMeeting = { ...selectedMeeting, payments: updatedPayments };
             updateMeeting(updatedMeeting);
         }
-    };
+    }, [selectedMeeting, updateMeeting]);
+
+    const onRemovePayment = useCallback((index) => {
+        if (selectedMeeting) {
+            const updatedPayments = [...(selectedMeeting.payments || [])];
+            updatedPayments.splice(index, 1);
+            const updatedMeeting = { ...selectedMeeting, payments: updatedPayments };
+            updateMeeting(updatedMeeting);
+        }
+    }, [selectedMeeting, updateMeeting]);
 
     return (
         <div className="App">
@@ -78,15 +92,16 @@ function App() {
                 <SettingsPage
                     meeting={selectedMeeting}
                     groups={groups}
-                    onAddGroup={addGroup}
-                    onAddMember={addMembersToMeeting} // 개별 멤버 추가 함수 전달
-                    onSavePayment={onSavePayment}       // 결제 내역 저장 함수 전달
+                    onAddGroup={addGroupFromSettings}
+                    onAddMember={addMembersToMeeting}
+                    onSavePayment={onSavePayment}
                     onSave={updateMeeting}
+                    onRemovePayment={onRemovePayment}
                     onCancel={navigateToMain}
                 />
             ) : (
                 <AddGroupPage
-                    onSaveGroup={addGroup}
+                    onSaveGroup={addGroupFromMain}
                     onCancel={navigateToMain}
                 />
             )}

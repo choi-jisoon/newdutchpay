@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import AddGroupPage from './AddGroupPage';
 
@@ -7,13 +9,23 @@ const PageWrapper = styled.div`
    display: flex;
    justify-content: center;
    align-items: center;
-   height: auto;
-   width: 600px;
+   min-height: 100vh;
+   width: 550px;
    margin: auto auto;
    flex-direction: column;
-   background-color: #f0f4ff;
 `;
-
+const Container = styled.div`
+   font-family: pretendard;
+   display: flex;
+   flex-direction: column;
+   /* align-items: center; */
+   width: 100%;
+   max-width: 600px;
+   padding: 20px;
+   background-color: #f0f4ff;
+   border-radius: 10px;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+`;
 const Header = styled.div`
    display: flex;
    justify-content: space-between;
@@ -34,6 +46,7 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
+   font-family: pretendard;
    padding: 8px 12px;
    color: #fff;
    border: none;
@@ -84,15 +97,19 @@ const RemoveButton = styled.button`
    color: red;
    cursor: pointer;
    font-size: 0.8rem;
-   padding-left:8px;
-   /* margin-left: 5px; */
+   margin-top: 3px;
+   margin-left: 5px;
 `;
 
+const RemovePaymentButton = styled(RemoveButton)`
+   margin-top: 0px;
+   padding-left: 10px;
+`;
 /* const MemberSeparator = styled.span`
    margin: 5px 8px;
 `; */
 
-function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePayment, onCancel }) {
+function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePayment, onCancel, onRemovePayment }) {
    const [isAddingGroup, setIsAddingGroup] = useState(false);
    const [isAddingMember, setIsAddingMember] = useState(false);
    const [newMember, setNewMember] = useState('');
@@ -101,7 +118,7 @@ function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePay
    const [paymentName, setPaymentName] = useState('');
    const [paymentAmount, setPaymentAmount] = useState('');
    const [selectedMembers, setSelectedMembers] = useState([]);
-   const [members, setMembers] = useState(Array.isArray(meeting.members) ? meeting.members : []); // 초기 멤버 배열 설정
+   const [members, setMembers] = useState(Array.isArray(meeting.members) ? meeting.members : []);
    const payments = meeting.payments || [];
 
    useEffect(() => {
@@ -110,7 +127,6 @@ function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePay
       }
    }, [meeting.members]);
 
-   // 멤버 추가 함수
    const addMemberOrGroup = () => {
       if (newMember && !members.includes(newMember)) {
          const updatedMembers = [...members, newMember];
@@ -127,14 +143,12 @@ function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePay
       setIsAddingMember(false);
    };
 
-   // 멤버 삭제 함수 추가
    const removeMember = (member) => {
       const updatedMembers = members.filter((m) => m !== member);
       setMembers(updatedMembers);
-      onAddMember(updatedMembers); // 부모 컴포넌트에도 업데이트 전달
+      onAddMember(updatedMembers);
    };
 
-   // 결제 내역 저장 핸들러
    const handleSavePayment = () => {
       if (selectedMembers.length > 0) {
          const perPersonShare = Math.ceil(paymentAmount / selectedMembers.length);
@@ -153,7 +167,7 @@ function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePay
 
    return (
       <PageWrapper>
-         {/* Header */}
+         <Container>
          <Header>
             <MeetingName>{meeting.title}</MeetingName>
             <ButtonContainer>
@@ -162,27 +176,23 @@ function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePay
             </ButtonContainer>
          </Header>
 
-         {/* 모임 멤버 목록 */}
          <Section>
-         <h3>{meeting.title} 모임 멤버</h3>
-         <div>
-            {members.map((member, index) => (
-               <span className='setting_span' key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>
-                  {member}
-                  <RemoveButton onClick={() => removeMember(member)}>x</RemoveButton>
-                  {/* 마지막 멤버가 아니라면 쉼표를 표시하고 간격 추가
-                  {index < members.length - 1 && <MemberSeparator>,</MemberSeparator>} */}
-               </span>
-            ))}
-         </div>
-      </Section>
+            <h3>{meeting.title} 모임 멤버</h3>
+            <div>
+               {members.map((member, index) => (
+                  <span className='setting_span' key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                     {member}
+                     <RemoveButton onClick={() => removeMember(member)}><FontAwesomeIcon icon={faXmark} size='xl'/></RemoveButton>
+                  </span>
+               ))}
+            </div>
+         </Section>
 
-         {/* 개별 멤버 및 그룹 선택 섹션 */}
          {isAddingMember && (
             <Section>
                <input
                   type="text"
-                  placeholder="새 멤버 이름"
+                  placeholder=" 새 멤버 이름"
                   value={newMember}
                   onChange={(e) => setNewMember(e.target.value)}
                />
@@ -198,45 +208,43 @@ function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePay
             </Section>
          )}
 
-         {/* 그룹 추가 페이지 */}
          {isAddingGroup && (
             <Section>
                <AddGroupPage
                   onSaveGroup={(group) => {
-                     onAddGroup(group);
-                     setIsAddingGroup(false);
+                     onAddGroup(group);   // 그룹 추가
+                     setIsAddingGroup(false); // 모달 닫기
                   }}
                   onCancel={() => setIsAddingGroup(false)}
                />
             </Section>
          )}
 
-         {/* 결제 내역 표시 */}
          <Section>
             <h3>결제 내역</h3>
             {payments.map((payment, index) => (
                <PaymentItem key={index}>
                   <span>{payment.name} ({payment.members.length}명)</span>
                   <span>{payment.amount}원 / 1인당 {payment.perPersonShare}원</span>
+                  <RemovePaymentButton onClick={() => onRemovePayment(index)}><FontAwesomeIcon icon={faXmark} size='xl'/></RemovePaymentButton>
                </PaymentItem>
             ))}
             <PaymentAddButton onClick={() => setIsAddingPayment(true)}>+ 결제내역 추가</PaymentAddButton>
          </Section>
 
-         {/* 결제 내역 추가 섹션 */}
          {isAddingPayment && (
             <Section>
                <h3>새로운 결제 내역</h3>
                <input
                   type="text"
-                  placeholder="결제명"
+                  placeholder=" 결제명"
                   value={paymentName}
                   onChange={(e) => setPaymentName(e.target.value)}
                />
                <input
                   type="number"
-                  placeholder="총 결제 금액"
-                  value={paymentAmount}
+                  placeholder=" 총 결제 금액"
+                  value={paymentAmount || ""}
                   onChange={(e) => setPaymentAmount(Number(e.target.value))}
                />
                <div>
@@ -265,12 +273,12 @@ function SettingsPage({ meeting = {}, groups, onAddGroup, onAddMember, onSavePay
             </Section>
          )}
 
-         {/* 닫기 버튼 */}
          <ButtonContainer>
-            <Button onClick={onCancel} style={{ backgroundColor: '#e55555', marginTop: '20px',marginBottom: '30px' }}>
+            <Button onClick={onCancel} style={{ backgroundColor: '#e55555', marginTop: '20px', marginBottom: '30px' }}>
                닫기
             </Button>
          </ButtonContainer>
+         </Container>
       </PageWrapper>
    );
 }

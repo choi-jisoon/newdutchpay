@@ -34,12 +34,17 @@ const MainContainer = styled.div`
 `;
 
 const AddGroupButton = styled.button`
+   font-family: pretendard;
    position: absolute;
    top: 4.7%;
    right: 3%;
    padding: 10px 20px;
    font-size: 16px;
    cursor: pointer;
+   background-color: #ccc;
+   border: 1px solid #CCC;
+   border-radius: 50%;
+   box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.5);
 `;
 
 const MeetingGrid = styled.div`
@@ -60,11 +65,12 @@ const AddMeetingCard = styled.button`
    justify-content: center;
    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
    color: #000;
+   font-weight: 700;
    text-align: center;
    padding: 15px 5px;
-   font-size: 14px;
+   font-size: 20px;
    transition: transform 0.2s ease, box-shadow 0.2s ease;
-
+   border: 1px solid #999;
    /* hover 시 효과 */
    &:hover {
       transform: translateY(-8px);

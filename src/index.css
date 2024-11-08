@@ -1,7 +1,13 @@
 body {
    background-color: #000 !important;
 }
+select {
+   font-family: pretendard;
+   font-size: 16px;
+}
 input{
+   font-size: 16px;
+   font-family: pretendard;
    margin-right: 20px;
    height: 30px;
    border: 1px solid #000;
@@ -15,7 +21,16 @@ label{
    margin-right: 5px;
 }
 .member_group_add {
+   /* margin-top: 15px; */
+   font-family: pretendard;
    margin-left: 20px;
+   padding: 6px 10px;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   font-size: 0.9rem;
+   cursor: pointer;
+   background-color: #4ac1e0;
 }
 .meeting_delete {
    margin-left: -2px;
