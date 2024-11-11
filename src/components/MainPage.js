@@ -71,6 +71,7 @@ const AddMeetingCard = styled.button`
    font-size: 20px;
    transition: transform 0.2s ease, box-shadow 0.2s ease;
    border: 1px solid #999;
+   font-family: 'Pretendard';
    /* hover 시 효과 */
    &:hover {
       transform: translateY(-8px);
